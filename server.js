@@ -11,6 +11,7 @@ io.on('connection', socket => {
     if (!users[socket.id]) {
         users[socket.id] = socket.id;
     }
+    console.log(users);
     socket.emit("yourID", socket.id);
     io.sockets.emit("allUsers", users);
     socket.on('disconnect', () => {

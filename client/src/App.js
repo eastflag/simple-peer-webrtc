@@ -81,10 +81,14 @@ function App() {
     });
 
     peer.on("signal", data => {
+      // { type: 'offer', sdp: 'xxxxx}
+      // console.log('signal: ', data)
       socket.current.emit("callUser", { userToCall: id, signalData: data, from: yourID })
     })
 
     peer.on("stream", stream => {
+      // { type: 'answer', sdp: 'xxxxx}
+      // console.log('stream: ', stream)
       if (partnerVideo.current) {
         partnerVideo.current.srcObject = stream;
       }
