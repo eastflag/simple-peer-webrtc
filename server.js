@@ -19,10 +19,12 @@ io.on('connection', socket => {
     })
 
     socket.on("callUser", (data) => {
+        console.log('callUser: ', data);
         io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
     })
 
     socket.on("acceptCall", (data) => {
+        console.log('acceptCall: ', data);
         io.to(data.to).emit('callAccepted', data.signal);
     })
 });

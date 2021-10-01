@@ -44,9 +44,11 @@ function App() {
       }
     })
 
+    // connect가 되면 yourID가 내려온다.
     socket.current.on("yourID", (id) => {
       setYourID(id);
     })
+    // 유저가 접속이 되면 내려온다.
     socket.current.on("allUsers", (users) => {
       setUsers(users);
     })
@@ -80,6 +82,7 @@ function App() {
       stream: stream,
     });
 
+    // initiator인 경우는 signal 이벤트가 바로 발생한다.
     peer.on("signal", data => {
       // { type: 'offer', sdp: 'xxxxx}
       // console.log('signal: ', data)
@@ -96,6 +99,7 @@ function App() {
 
     socket.current.on("callAccepted", signal => {
       setCallAccepted(true);
+      // 두번재 시그널: caller --> receiver
       peer.signal(signal);
     })
 
@@ -108,6 +112,7 @@ function App() {
       trickle: false,
       stream: stream,
     });
+    // peer 생성시 signal 이벤트가 바로 발생함.
     peer.on("signal", data => {
       socket.current.emit("acceptCall", { signal: data, to: caller })
     })
@@ -116,6 +121,7 @@ function App() {
       partnerVideo.current.srcObject = stream;
     });
 
+    // 첫번재 시그널: receiver --> caller
     peer.signal(callerSignal);
   }
 

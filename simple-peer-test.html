@@ -8,6 +8,20 @@
         white-space: normal;
     }
 </style>
+<div>
+  <p>npx http-server ./ 로컬서버 구동.</p>
+  <p>http://127.0.0.1:8081/simple-peer-test.html#1 으로 caller 구동</p>
+  <p>outgoing에 offer signal 카피후 두번째 브라우저를 열고 http://127.0.0.1:8081/simple-peer-test.html 을 띄운다.</p>
+  <p>두번째 브라우저 input에 첫번째 브라우저의 offer signal을 넣고 submit 클릭</p>
+  <p>그러면 두번째 브라우저에서 p.signal({offer signal})로 시그널을 보내고 answer signal 생성됨</p>
+  <p>answer signal을 initiator form에 넣고 submit 클릭</p>
+  <p>양쪽 브라우저에 각각 connect 이벤트 발생</p>
+  <p>connect 후 데이터를 보내고 data 이벤트 발생</p>
+  <p>-----------</p>
+  <p>initiator 가 offer 시그널 생성</p>
+  <p>receiver가 peer.signal()</p>
+  <p>initiator가 peer.signal() 로 두번 signal을 주고받으면 connect된다.</p>
+</div>
 <form>
   <textarea id="incoming"></textarea>
   <button type="submit">submit</button>
