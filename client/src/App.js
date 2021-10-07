@@ -53,6 +53,7 @@ function App() {
       setUsers(users);
     })
 
+    // (2)
     socket.current.on("hey", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
@@ -82,7 +83,7 @@ function App() {
       stream: stream,
     });
 
-    // initiator인 경우는 signal 이벤트가 바로 발생한다.
+    // initiator인 경우는 signal 이벤트가 바로 발생한다. (1)
     peer.on("signal", data => {
       // { type: 'offer', sdp: 'xxxxx}
       // console.log('signal: ', data)
@@ -97,6 +98,7 @@ function App() {
       }
     });
 
+    // (5)
     socket.current.on("callAccepted", signal => {
       setCallAccepted(true);
       // 두번재 시그널: caller --> receiver
@@ -112,7 +114,7 @@ function App() {
       trickle: false,
       stream: stream,
     });
-    // peer 생성시 signal 이벤트가 바로 발생함.
+    // (4)
     peer.on("signal", data => {
       socket.current.emit("acceptCall", { signal: data, to: caller })
     })
@@ -121,7 +123,7 @@ function App() {
       partnerVideo.current.srcObject = stream;
     });
 
-    // 첫번재 시그널: receiver --> caller
+    // 첫번재 시그널: receiver --> caller (3)
     peer.signal(callerSignal);
   }
 
